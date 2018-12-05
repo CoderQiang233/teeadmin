@@ -1,0 +1,22 @@
+
+.normal {
+    .clear{
+        clear: both;
+    }
+    .samllImg{
+        width: 50px;
+        height: 50px;
+    }
+}
+:global(.imgModal){
+    :global(.ant-modal){
+         width: 80% !important;
+        //max-width: 60% !important;
+        img{
+         //width: 100%
+        }
+        :global(.ant-modal-body){
+            padding: 40px 16px !important;
+        }
+    }
+}
