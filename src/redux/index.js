@@ -30,6 +30,8 @@ import percentageRedux from './percentageRedux'
 import indexBanner from  './IndexBannerRedux'
 import ProductBanner from  './ProductBannerRedux'
 import inventory from  './inventory'
+import indexLayoutRedux from  './indexLayoutRedux'
+
 const config = {
   routerReducer,
   login,
@@ -59,6 +61,7 @@ const config = {
   indexBanner,
   ProductBanner,
   inventory,
+  indexLayoutRedux,
 
 
 }

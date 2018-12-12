@@ -7,6 +7,11 @@ const menuData = [
       path:'member/msg',
     },
     {
+      name:'首页布局管理',
+      icon:'team',
+      path:'indexLayout/index',
+    },
+    {
       name:'商品管理',
       icon:'shop',
       path:'product',
@@ -25,18 +30,18 @@ const menuData = [
  
 
 
-  // {
-  //   name: '库存管理',
-  //   icon: 'database',
-  //   path: 'inventory',
-  //   children: [{
-  //     name: '总库存管理',
-  //     path: 'totalInventory',
-  //   }, {
-  //     name: '代理库存管理',
-  //     path: 'agentInventory',
-  //   }]
-  // },
+  {
+    name: '库存管理',
+    icon: 'database',
+    path: 'inventory',
+    children: [{
+      name: '总库存管理',
+      path: 'totalInventory',
+    }, {
+      name: '代理库存管理',
+      path: 'agentInventory',
+    }]
+  },
   {
     name: '返现管理',
     icon: 'pay-circle',

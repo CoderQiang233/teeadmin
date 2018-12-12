@@ -36,6 +36,7 @@ class AddGoods extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
+                console.log(values.first_picture)
                 values.detail = this.state.detail;
                 
                 values.first_picture = this.state.imageUrl;

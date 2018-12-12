@@ -5,6 +5,7 @@ import LoginPage from '../routes/login/index'
 import BasicLayout from '../layouts/BaseLayout'
 import UserLayout from '../layouts/UserLayout'
 
+
 // 人员管理
 import Staff from '../routes/Staff/index'
 // 用户管理
@@ -52,6 +53,9 @@ import Agent from '../routes/inventory/pointInventory/index'
 import AgentInventory from '../routes/inventory/pointInventory/PointInventory'
 import AgentProductInventory from '../routes/inventory/pointInventory/PInventoryItem'
 
+// 小程序首页布局管理
+import IndexLayout from '../routes/indexLayout/index'
+import AddModule from '../routes/indexLayout/addModule'
 
 
 let routerDataCache;
@@ -174,6 +178,12 @@ export const getRouterData = () => {
     },
     "/system/profile": {
       component: Profile,
+    },
+    "/indexLayout/index": {
+      component: IndexLayout,
+    },
+    "/indexLayout/addModule": {
+      component: AddModule,
     },
 
   }
