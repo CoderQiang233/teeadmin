@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styles from '../../common/common.less';
 import { Table, Button, Popconfirm, Modal, Form, Input } from 'antd';
-import IndexImage from './indexImage'
+import IndexImage from '../../components/IndexModule/indexImage'
+import CategoryProducts from '../../components/IndexModule/categoryProducts'
+
 const ButtonGroup = Button.Group;
 const FormItem = Form.Item;
 const confirm = Modal.confirm;
@@ -25,7 +27,9 @@ const EditModule = Form.create()(
                 {moduleKey=='IndexImage'&&
                     <IndexImage  action={action} module={module}  form={form}></IndexImage>
                 }
-                    
+                  {moduleKey=='CategoryProducts'&&
+                    <CategoryProducts  action={action} module={module}  form={form}></CategoryProducts>
+                }  
                  </Modal>
             )
         }
