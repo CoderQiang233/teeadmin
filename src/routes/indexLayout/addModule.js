@@ -90,6 +90,11 @@ class addModule extends Component {
             key: '2',
             name: '分类多商品',
             keyword: 'CategoryProducts',
+          },
+          {
+            key: '3',
+            name: '单张广告图',
+            keyword: 'PictureBanner',
           }];
           
           const columns = [{

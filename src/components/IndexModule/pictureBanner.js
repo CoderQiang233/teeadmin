@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styles from '../../common/common.less';
 import { Table, Button, Popconfirm, Modal, Form, Input, Upload, Icon, Select } from 'antd';
-import UploadImg from '../../components/uploadImg';
+import UploadImg from '../uploadImg';
+
 import config from '../../utils/config';
 import jsonp from 'fetch-jsonp';
 import querystring from 'querystring';
@@ -51,7 +52,7 @@ function fetch(value, callback) {
 
     timeout = setTimeout(fake, 300);
 }
-class IndexImage extends Component {
+class PictureBanner extends Component {
     constructor(props) {
 
         super(props)
@@ -63,10 +64,10 @@ class IndexImage extends Component {
         }
     }
     componentDidMount() {
-        this.props.dispatch({
-            type: 'indexLayout/getProductOption',
-            payload: {}
-        })
+        // this.props.dispatch({
+        //     type: 'indexLayout/getProductOption',
+        //     payload: {}
+        // })
         if(this.props.action=='edit'){
             let module=this.props.module;
             let setting=JSON.parse(module.setting);
@@ -77,7 +78,7 @@ class IndexImage extends Component {
             this.props.form.setFieldsValue(
                 {
                     'name':module.name,
-                    'product':setting.product,
+                    // 'product':setting.product,
                     'sort_order':module.sort_order,
                     'indexImg':setting.indexImg
                 }
@@ -96,7 +97,7 @@ class IndexImage extends Component {
                 nextProps.form.setFieldsValue(
                     {
                         'name':module.name,
-                        'product':setting.product,
+                        // 'product':setting.product,
                         'sort_order':module.sort_order,
                         'indexImg':setting.indexImg
                     }
@@ -169,10 +170,10 @@ class IndexImage extends Component {
                     )}
                 </FormItem>
                 <FormItem   {...formItemLayout}
-                    label="商品首图"
+                    label="图片"
                 >
                     {getFieldDecorator('indexImg', {
-                        rules: [{ required: true, message: '请上传商品首图' }]
+                        rules: [{ required: true, message: '图片' }]
                     })(
                         <div className={styles.imgbox}>
                             <Upload
@@ -189,7 +190,7 @@ class IndexImage extends Component {
                         </div>
                     )}
                 </FormItem>
-                <FormItem {...formItemLayout} label="链接商品">
+                {/* <FormItem {...formItemLayout} label="链接商品">
                     {getFieldDecorator('product', {
                         rules: [{ required: true, message: '请选择链接商品' }],
                     })(
@@ -208,7 +209,7 @@ class IndexImage extends Component {
                             {options}
                         </Select>
                     )}
-                </FormItem>
+                </FormItem> */}
                 <FormItem {...formItemLayout} label="排序">
                     {getFieldDecorator('sort_order', {
                         rules: [{ required: true, message: '请输入名称' }],
@@ -224,4 +225,4 @@ function mapStateToProps({ indexLayoutRedux }) {
 
     return { indexLayoutRedux };
 }
-export default connect(mapStateToProps)(IndexImage);
+export default connect(mapStateToProps)(PictureBanner);
