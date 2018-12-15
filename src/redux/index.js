@@ -31,6 +31,7 @@ import indexBanner from  './IndexBannerRedux'
 import ProductBanner from  './ProductBannerRedux'
 import inventory from  './inventory'
 import indexLayoutRedux from  './indexLayoutRedux'
+import goodsType from './goodsType'
 
 const config = {
   routerReducer,
@@ -62,6 +63,7 @@ const config = {
   ProductBanner,
   inventory,
   indexLayoutRedux,
+  goodsType,
 
 
 }

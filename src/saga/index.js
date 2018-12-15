@@ -28,6 +28,7 @@ import indexBannerSaga from './IndexBannerSaga'
 import ProductBannerSaga from './ProductBannerSaga'
 import inventroy from './inventorySaga';
 import indexLayoutSaga from './indexLayoutSaga';
+import goodsType from './goodsTypeSaga'
 
 // 所有saga的入口配置文件
 const config = [
@@ -60,6 +61,7 @@ const config = [
     fork(ProductBannerSaga),
     fork(inventroy),
     fork(indexLayoutSaga),
+    fork(goodsType),
 
 
 ]

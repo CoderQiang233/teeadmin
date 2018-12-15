@@ -19,6 +19,9 @@ const menuData = [
         name: '商品管理',
         path: 'productList',
       },{
+        name: '商品类别管理',
+        path: 'productType'
+      },{
         name: '商品订单管理',
         path: 'productOrder'
       },

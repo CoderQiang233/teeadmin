@@ -56,6 +56,8 @@ import AgentProductInventory from '../routes/inventory/pointInventory/PInventory
 // 小程序首页布局管理
 import IndexLayout from '../routes/indexLayout/index'
 import AddModule from '../routes/indexLayout/addModule'
+//商品类别
+import GoodsType from '../routes/goodsType/GoodsType'
 
 
 let routerDataCache;
@@ -92,6 +94,9 @@ export const getRouterData = () => {
     },
     "/product/productOrder/express": {
       component: Expres,
+    },
+    "/product/productType": {
+      component: GoodsType,
     },
     "/product/productList": {
       component: ProductManager,
