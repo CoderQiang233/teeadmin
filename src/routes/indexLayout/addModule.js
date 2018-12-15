@@ -69,22 +69,7 @@ class addModule extends Component {
                   type: 'indexLayout/addIndexModule',
                   payload: values
                   })
-            // if(this.state.action=='add'){
-            //   this.props.dispatch({
-            //       type: 'staff/addStaff',
-            //       payload: values
-            //       })
-            // }else if(this.state.action=='edit'){
-            //     values['staffId']=this.state.staffId
-            //   this.props.dispatch({
-            //       type: 'staff/editStaff',
-            //       payload: values
-            //       })
-            // }
             console.log('Received values of form: ', values);
-            
-            
-          //   this.setState({ addVisible: false });
           });
       }
     render() {
@@ -99,9 +84,18 @@ class addModule extends Component {
         }];
         const moduleList = [{
             key: '1',
-            name: '单图',
+            name: '单图商品',
             keyword: 'IndexImage',
-          },];
+          },{
+            key: '2',
+            name: '分类多商品',
+            keyword: 'CategoryProducts',
+          },
+          {
+            key: '3',
+            name: '单张广告图',
+            keyword: 'PictureBanner',
+          }];
           
           const columns = [{
             title: '模块名',

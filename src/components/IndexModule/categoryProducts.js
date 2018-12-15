@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styles from '../../common/common.less';
 import { Table, Button, Popconfirm, Modal, Form, Input, Upload, Icon, Select } from 'antd';
-import UploadImg from '../../components/uploadImg';
+import UploadImg from '../uploadImg';
 import config from '../../utils/config';
 import jsonp from 'fetch-jsonp';
 import querystring from 'querystring';
@@ -51,7 +51,7 @@ function fetch(value, callback) {
 
     timeout = setTimeout(fake, 300);
 }
-class IndexImage extends Component {
+class CategoryProducts extends Component {
     constructor(props) {
 
         super(props)
@@ -169,10 +169,10 @@ class IndexImage extends Component {
                     )}
                 </FormItem>
                 <FormItem   {...formItemLayout}
-                    label="商品首图"
+                    label="分类图"
                 >
                     {getFieldDecorator('indexImg', {
-                        rules: [{ required: true, message: '请上传商品首图' }]
+                        rules: [{ required: true, message: '请上传分类图' }]
                     })(
                         <div className={styles.imgbox}>
                             <Upload
@@ -194,6 +194,7 @@ class IndexImage extends Component {
                         rules: [{ required: true, message: '请选择链接商品' }],
                     })(
                         <Select
+                            mode="multiple"
                             showSearch
                             value={this.state.value}
                             placeholder={this.props.placeholder}
@@ -224,4 +225,4 @@ function mapStateToProps({ indexLayoutRedux }) {
 
     return { indexLayoutRedux };
 }
-export default connect(mapStateToProps)(IndexImage);
+export default connect(mapStateToProps)(CategoryProducts);

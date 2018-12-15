@@ -1,5 +1,5 @@
 import { put, takeLatest, call, select } from 'redux-saga/effects'
-import { addModuleSer,getModuleList,getProductOption,editModuleSer } from '../services/indexLayout'
+import { addModuleSer,getModuleList,getProductOption,editModuleSer,deleteModule } from '../services/indexLayout'
 import { message } from 'antd';
 import { pageSize } from '../utils/config'
 
@@ -62,6 +62,8 @@ function* editModule({ payload }) {
             type:'indexLayout/getIndexModule',
             payload:{}
           })
+    }else{
+
     }
   }
 function* getProductO({ payload }) {
@@ -81,11 +83,36 @@ function* getProductO({ payload }) {
         });
     }
   }
+  function* delModule({ payload }) {
+    const response = yield call(deleteModule, payload);
+    console.log(response);
+    yield put({
+      type: 'indexLayout/loading'
+    });
+  
+    if (response.data.data) {
+     
+      message.success('删除成功',1)
+
+      yield put({
+          type: 'indexLayout/closeLoading'
+        });
+        yield put({
+          type:'indexLayout/getIndexModule',
+          payload:{}
+        })
+    }else{
+      message.error('删除失败',1)
+
+    }
+
+  }
 function* indexLayoutSaga() {
   yield takeLatest('indexLayout/addIndexModule', addModule)
   yield takeLatest('indexLayout/getIndexModule', getMoList)
   yield takeLatest('indexLayout/getProductOption', getProductO)
   yield takeLatest('indexLayout/editIndexModule', editModule)
+  yield takeLatest('indexLayout/deleteModule', delModule)
 
 }
 

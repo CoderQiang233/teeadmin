@@ -23,3 +23,9 @@ export async function getModuleList(param) {
     param.XDEBUG_SESSION_START = '18909';
     return request(apiAdmin, param);
   }
+
+  export async function deleteModule(param) {
+    param.service = 'WeixinLayout.deleteModule';
+    param.XDEBUG_SESSION_START = '18909';
+    return request(apiAdmin, param);
+  }

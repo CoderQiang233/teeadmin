@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styles from '../../common/common.less';
-import { Table, Button, Popconfirm, Modal, Form, Input } from 'antd';
+import { Table, Button, Popconfirm, Modal, Form, Input, message,Divider } from 'antd';
 import { pageSize } from '../../utils/config'
 import PageHeader from 'ant-design-pro/lib/PageHeader';
 import { history } from '../../store';
@@ -23,7 +23,7 @@ class indexLayout extends Component {
             modalTitle: '新增人员',
             modalBtn: '新增',
             moduleKey: '',
-            module:{}
+            module: {}
         }
     }
     componentDidMount() {
@@ -46,12 +46,12 @@ class indexLayout extends Component {
         this.setState({
             moduleId: module.module_id,
             moduleKey: module.keyword,
-            module:module,
+            module: module,
             addVisible: true,
             action: 'edit',
             modalTitle: '编辑组织机构',
             modalBtn: '编辑'
-        },function(){
+        }, function () {
             console.log(this.state)
         })
     }
@@ -59,37 +59,48 @@ class indexLayout extends Component {
         const form = this.addFormRef.props.form;
         form.resetFields();
         this.setState({ addVisible: false });
-      }
-      saveFormRef = (formRef) => {
+    }
+    saveFormRef = (formRef) => {
         this.addFormRef = formRef;
-      }
-     cloneObjectFn=(obj)=> {
+    }
+    cloneObjectFn = (obj) => {
         return JSON.parse(JSON.stringify(obj))
-     }
-      handleAddCreate=()=>{
+    }
+    handleAddCreate = () => {
         const form = this.addFormRef.props.form;
         form.validateFields((err, values) => {
             if (err) {
-              return;
+                return;
             }
-           
-            let data=this.cloneObjectFn(values);
+
+            let data = this.cloneObjectFn(values);
             delete data.name;
             delete data.sort_order;
-            const dataJson=JSON.stringify(data);
-            values.setting=dataJson;
-            values.keyword=this.state.moduleKey;
-            values.id=this.state.moduleId;
-              this.props.dispatch({
-                  type: 'indexLayout/editIndexModule',
-                  payload: values
-                  })
+            const dataJson = JSON.stringify(data);
+            values.setting = dataJson;
+            values.keyword = this.state.moduleKey;
+            values.id = this.state.moduleId;
+            this.props.dispatch({
+                type: 'indexLayout/editIndexModule',
+                payload: values
+            })
             console.log('Received values of form: ', values);
-            
-            
-          //   this.setState({ addVisible: false });
-          });
-      }
+
+
+            //   this.setState({ addVisible: false });
+        });
+    }
+    deleteConfirm = (module_id) => {
+        this.props.dispatch({
+            type: 'indexLayout/deleteModule',
+            payload: {'id':module_id}
+        })
+    }
+
+    deleteCancel = (e) => {
+        console.log(e);
+        message.error('Click on No');
+    }
     render() {
         //页头
         const breadcrumbList = [{
@@ -114,6 +125,10 @@ class indexLayout extends Component {
                 return (
                     <span>
                         <Button onClick={this.editModule.bind(this, record)}>修改</Button>
+                        <Divider type="vertical" />
+                        <Popconfirm title="确定删除该模块?" onConfirm={this.deleteConfirm.bind(this,record['module_id'])} onCancel={this.deleteCancel.bind(this)} okText="Yes" cancelText="No">
+                        <Button type="danger">删除</Button>
+                        </Popconfirm>
                     </span>
                 )
             }
@@ -125,17 +140,17 @@ class indexLayout extends Component {
                     <Button onClick={this.addModule}>添加模块</Button>
                     <Table dataSource={this.props.indexLayoutRedux.moduleList} columns={columns} />
                 </div>
-                <EditModule 
-                wrappedComponentRef={this.saveFormRef}
-                visible={this.state.addVisible}
-                onCancel={this.handleAddCancel}
-                onCreate={this.handleAddCreate}
-                modalTitle={this.state.modalTitle}
-                modalBtn={this.state.modalBtn}
-                action={this.state.action}
-                dispatch={this.props.dispatch}
-                moduleKey={this.state.moduleKey}
-                module={this.state.module}
+                <EditModule
+                    wrappedComponentRef={this.saveFormRef}
+                    visible={this.state.addVisible}
+                    onCancel={this.handleAddCancel}
+                    onCreate={this.handleAddCreate}
+                    modalTitle={this.state.modalTitle}
+                    modalBtn={this.state.modalBtn}
+                    action={this.state.action}
+                    dispatch={this.props.dispatch}
+                    moduleKey={this.state.moduleKey}
+                    module={this.state.module}
                 ></EditModule>
             </div>
         );
