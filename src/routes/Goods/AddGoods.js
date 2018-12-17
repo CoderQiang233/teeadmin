@@ -6,11 +6,11 @@ import BraftEditor from 'braft-editor';
 import 'braft-editor/dist/braft.css';
 import styles from '../../common/common.less';
 import config from '../../utils/config';
-const { apiAdmin,imgPath } = config;
+const { apiAdmin, imgPath } = config;
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const Option = Select.Option;
-let imagePath=apiAdmin+'?service=Upload.Upload';
+let imagePath = apiAdmin + '?service=Upload.Upload';
 class AddGoods extends Component {
 
     constructor(props) {
@@ -23,11 +23,17 @@ class AddGoods extends Component {
             previewVisible: false,
             previewImage: '',
             fileListHead: '',
-            imageUrl:'',
+            imageUrl: '',
+            loading:false,
         }
     }
 
     componentDidMount() {
+
+        this.props.dispatch({
+            type: 'findAllType',
+            payload: {}
+        })
 
     }
 
@@ -36,23 +42,27 @@ class AddGoods extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log(values.first_picture)
+                this.setState({
+                    loading:true
+                })
                 values.detail = this.state.detail;
-                
+
                 values.first_picture = this.state.imageUrl;
 
-                values.fileList=this.state.fileList;
-                let banners=[];
-                if(values.fileList.length>0){
-                    for(let i=0;i<values.fileList.length;i++){
+                values.fileList = this.state.fileList;
+                let banners = [];
+                if (values.fileList.length > 0) {
+                    for (let i = 0; i < values.fileList.length; i++) {
                         banners.push(values.fileList[i].response.data.file);
                     }
-                }else{
+                } else {
                     message.warn('请上传商品banner图')
-                    return ;
+                    return;
                 }
                 values.banners = JSON.stringify(banners);
-                
+
+                values.product_type_id = JSON.stringify(values.product_type_id);
+
                 console.log('Received values of form: ', values);
 
                 this.props.dispatch({
@@ -70,7 +80,7 @@ class AddGoods extends Component {
     //富文本上传图片
     uploadFn = (param) => {
         //imagePath:图片上传的方法路径
-        const serverURL = imagePath +'&'+ param.file;
+        const serverURL = imagePath + '&' + param.file;
         const xhr = new XMLHttpRequest
         const fd = new FormData()
         // libraryId可用于通过mediaLibrary示例来操作对应的媒体内容      
@@ -89,9 +99,9 @@ class AddGoods extends Component {
 
     handleChangeBanner = ({ fileList }) => {
 
-          this.setState({ fileList })
+        this.setState({ fileList })
     }
-    
+
 
     handleCancel = () => this.setState({ previewVisible: false })
 
@@ -104,20 +114,20 @@ class AddGoods extends Component {
     //上传商品首图
     handleChangeHead = (info) => {
         if (info.file.status === 'uploading') {
-          this.setState({ loading: true });
-          return;
+            this.setState({ loading: true });
+            return;
         }
         if (info.file.status === 'done') {
-        this.setState({
-            imageUrl:info.file.response.data.file,
-            loading: false,
-        })
+            this.setState({
+                imageUrl: info.file.response.data.file,
+                loading: false,
+            })
         }
 
-      }
-   
+    }
+
     render() {
-        const { getFieldDecorator, getFieldValue  } = this.props.form;
+        const { getFieldDecorator, getFieldValue } = this.props.form;
         const editorProps = {
             height: '200px',
             contentFormat: 'html',
@@ -162,14 +172,14 @@ class AddGoods extends Component {
                 <div className="ant-upload-text">上传</div>
             </div>
         );
-        const { previewVisible, previewImage, fileList,imageUrl } = this.state
+        const { previewVisible, previewImage, fileList, imageUrl } = this.state
         //首图
         const uploadButtonHead = (
             <div>
-              <Icon type={this.state.loading ? 'loading' : 'plus'} />
-              <div className="ant-upload-text" style={{width:'100%'}}>上传</div>
+                <Icon type={this.state.loading ? 'loading' : 'plus'} />
+                <div className="ant-upload-text" style={{ width: '100%' }}>上传</div>
             </div>
-          );
+        );
 
         return (
             <div className={styles.content}>
@@ -197,24 +207,35 @@ class AddGoods extends Component {
 
                         </FormItem>
                         <FormItem   {...formItemLayout}
+                            label="商品类别"
+                        >
+                            {getFieldDecorator('product_type_id', {
+                                rules: [{ required: true, message: '请选择商品类别' }],
+                            })(
+                                <Cascader options={this.props.goods.typeList} />
+                            )}
+
+                        </FormItem>
+                        <FormItem   {...formItemLayout}
                             label="市场价格"
                         >
-                        {getFieldDecorator('market_price', {
+                            {getFieldDecorator('market_price', {
                                 rules: [{ required: true, message: '请输入市场价格' }]
                             })(
-                                <InputNumber min={0} style={{width:'100%'}} placeholder="请输入市场价格" />
+                                <InputNumber min={0} style={{ width: '100%' }} placeholder="请输入市场价格" />
                             )}
                         </FormItem>
                         <FormItem   {...formItemLayout}
-                            label="代理价格"
+                            label="佣金比率"
                         >
-                        {getFieldDecorator('agent_price', {
-                                rules: [{ required: true, message: '请输入代理价格' }]
+                            {getFieldDecorator('brokerage', {
+                                rules: [{ required: true, message: '请输入佣金比率' }]
                             })(
-                                <InputNumber min={0} style={{width:'100%'}} placeholder="请输入代理价格" />
+                                <InputNumber min={0} style={{ width: '93%', marginRight: 5 }} placeholder="请输入佣金比率" />
                             )}
+                            <span>% </span>
                         </FormItem>
-                       
+
                         <FormItem   {...formItemLayout}
                             label="商品简介"
                         >
@@ -228,23 +249,23 @@ class AddGoods extends Component {
                         <FormItem   {...formItemLayout}
                             label="商品首图"
                         >
-                        {getFieldDecorator('first_picture', {
+                            {getFieldDecorator('first_picture', {
                                 rules: [{ required: true, message: '请上传商品首图' }]
                             })(
                                 <div className={styles.imgbox}>
-                            <Upload
-                                name="file" 
-                                listType="picture-card"
-                                className="avatar-uploader"
-                                showUploadList={false}
-                                action={imagePath}
-                                onChange={this.handleChangeHead}
-                                
-                            >
-                                {imageUrl ? <img src={imgPath+imageUrl} alt="avatar" /> : uploadButtonHead}
-                            </Upload>
-                            </div>
-                             )}
+                                    <Upload
+                                        name="file"
+                                        listType="picture-card"
+                                        className="avatar-uploader"
+                                        showUploadList={false}
+                                        action={imagePath}
+                                        onChange={this.handleChangeHead}
+
+                                    >
+                                        {imageUrl ? <img src={imgPath + imageUrl} alt="avatar" /> : uploadButtonHead}
+                                    </Upload>
+                                </div>
+                            )}
                         </FormItem>
                         <FormItem   {...formItemLayout}
                             label="商品banner图"
@@ -256,7 +277,7 @@ class AddGoods extends Component {
                                 onPreview={this.handlePreview}
                                 onChange={this.handleChangeBanner}
                             >
-                                { uploadButton}
+                                {uploadButton}
                             </Upload>
                             <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
                                 <img alt="example" style={{ width: '100%' }} src={previewImage} />
@@ -280,6 +301,7 @@ class AddGoods extends Component {
                                 type="primary"
                                 htmlType="submit"
                                 style={{ marginRight: '50px', marginLeft: '50px' }}
+                                loading={this.state.loading}
                             >
                                 保存
                         </Button>

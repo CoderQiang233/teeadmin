@@ -58,7 +58,6 @@ function* update({payload}){
 }
 
 function* del({payload}){
-  console.log(payload);
   const response = yield call(deleteGoodsType,payload);
   if(response.data.data.code== 1){
     message.success('删除成功',1,function(){

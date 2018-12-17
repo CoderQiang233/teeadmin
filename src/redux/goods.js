@@ -4,6 +4,7 @@ const initstate = {
   list: [],
   ware:'',
   levelList:[],
+  typeList:[],
 }
 
 
@@ -34,10 +35,10 @@ function goods(state = initstate, { type, payload }) {
               levelList: payload.data.data.info,
               loading:false
           };
-      case "findAllGoodsTypeListSuccess":
+      case "findAllTypeSuccess":
           return {
               ...state,
-              typeList: payload.data.goodsTypeList,
+              typeList: payload.data.data.info,
               loading:false
           };
       case "findAllGoodSpecificationListSuccess":

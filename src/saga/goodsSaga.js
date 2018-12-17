@@ -1,6 +1,6 @@
 import { put,takeLatest,call,select } from 'redux-saga/effects'
 import { push,replace } from 'react-router-redux'
-import {findAllGoods,insertGoods,findById,updateGoods,deleteGoods,findAllLevel} from '../services/goods'
+import {findAllGoods,insertGoods,findById,updateGoods,deleteGoods,findAllType,productUpDown} from '../services/goods'
 import { reloadAuthorized } from '../utils/Authorized';
 import { message } from 'antd';
 import { pageSize,apiAdmin } from '../utils/config';
@@ -74,19 +74,29 @@ function* del({payload}){
   }
 }
 
-function* findLevel({payload}){
-  const response = yield call(findAllLevel,payload);
+function* findType({payload}){
+  const response = yield call(findAllType,payload);
   if(response.data.data.code==1){
     yield put({
-      type:'findAllMemberLevelSuccess',
+      type:'findAllTypeSuccess',
       payload:{...response}
     })
   }
 
 }
 
-
-
+function* upDown({payload}){
+  const response = yield call(productUpDown,payload);
+  if(response.data.data.code==1){
+    message.success('操作成功',1);
+    yield put({
+      type:'findAllGoods',
+      payload:{pageSize:pageSize,pageIndex:1}
+    })    
+  }else{
+    message.error('操作失败');
+  }
+}
 
  function* goodsSaga() {
    //获取商品列表
@@ -99,8 +109,10 @@ function* findLevel({payload}){
      yield takeLatest('updateGoods', update)
     //删除商品
     yield takeLatest('deleteGoods',del)
-    //查看会员等级
-    yield takeLatest('findAllMemberLevel', findLevel)
+    //查看全部商品类别
+    yield takeLatest('findAllType', findType)
+    //商品上下架   上下架(1:上架,2:下架)
+    yield takeLatest('productUpDown', upDown)
 
   }
 

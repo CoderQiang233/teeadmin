@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Form, Input, Row, Col, Button, Upload, InputNumber, Select, Icon, message, Modal } from 'antd';
+import { Form, Input, Row, Col, Button, Upload, InputNumber, Select, Icon, message, Modal ,Cascader} from 'antd';
 import PageHeader from 'ant-design-pro/lib/PageHeader';
 import BraftEditor from 'braft-editor';
 import 'braft-editor/dist/braft.css';
@@ -21,6 +21,7 @@ class EditGoods extends Component {
 
         super(props)
         ware = this.props.location.state.record
+        ware.type_parent=JSON.parse(this.props.location.state.record.type_parent)
         this.state = {
             detail: ware.detail,
             previewVisible: false,
@@ -30,6 +31,7 @@ class EditGoods extends Component {
             previewImage: '',
             fileListHead: '',
             first_picture: ware.first_picture,//首图
+            loading:false,
         }
         this.editorInstance = null
 
@@ -37,14 +39,20 @@ class EditGoods extends Component {
 
     componentDidMount() {
 
+        this.props.dispatch({
+            type: 'findAllType',
+            payload: {}
+        })
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-
-                values.id = ware.id;
+                this.setState({
+                    loading:true
+                })
+                values.id = ware.product_id;
                 values.detail = this.state.detail;
                 values.first_picture = this.state.first_picture;
                 let banners = values.banners;
@@ -73,6 +81,7 @@ class EditGoods extends Component {
                     }
                 }
                 values.banners = JSON.stringify(ban);
+                values.product_type_id = JSON.stringify(values.product_type_id);
                 console.log('Received values of form: ', values);
                 this.props.dispatch({
                     type: 'updateGoods',
@@ -169,7 +178,7 @@ class EditGoods extends Component {
     }
 
     render() {
-        const { id, name, first_picture, detail, banners, brand, intro,market_price,agent_price } = ware;
+        const { id, name, first_picture, detail, banners, brand, intro,market_price,brokerage,type_parent } = ware;
 
         let banner = null;
 
@@ -260,6 +269,17 @@ class EditGoods extends Component {
 
                         </FormItem>
                         <FormItem   {...formItemLayout}
+                            label="商品类别"
+                        >
+                            {getFieldDecorator('product_type_id', {
+                                rules: [{ required: true, message: '请选择商品类别' }],
+                                initialValue:type_parent
+                            })(
+                                <Cascader options={this.props.goods.typeList} />
+                            )}
+
+                        </FormItem>
+                        <FormItem   {...formItemLayout}
                             label="市场价格"
                         >
                         {getFieldDecorator('market_price', {
@@ -270,14 +290,16 @@ class EditGoods extends Component {
                             )}
                         </FormItem>
                         <FormItem   {...formItemLayout}
-                            label="代理价格"
+                            label="佣金比率"
                         >
-                        {getFieldDecorator('agent_price', {
-                                rules: [{ required: true, message: '请输入代理价格' }],
-                                initialValue: agent_price
+                            {getFieldDecorator('brokerage', {
+                                rules: [{ required: true, message: '请输入佣金比率' }],
+                                initialValue: brokerage
+
                             })(
-                                <InputNumber min={0} style={{width:'100%'}} placeholder="请输入代理价格" />
+                                <InputNumber min={0} style={{ width: '93%', marginRight: 5 }} placeholder="请输入佣金比率" />
                             )}
+                            <span>% </span>
                         </FormItem>
                         <FormItem   {...formItemLayout}
                             label="商品简介"
@@ -352,7 +374,8 @@ class EditGoods extends Component {
                         <FormItem
                             wrapperCol={{ offset: 8, span: '16' }}
                         >
-                            <Button type="primary" htmlType="submit" style={{ marginRight: '50px', marginLeft: '50px' }}>
+                            <Button type="primary" htmlType="submit" style={{ marginRight: '50px', marginLeft: '50px' }}  loading={this.state.loading}
+>
                                 保存
                         </Button>
                         </FormItem>
