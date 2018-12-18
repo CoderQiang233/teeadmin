@@ -32,7 +32,7 @@ import IndexBanner from '../routes/IndexBanner/IndexBanner'
 import ProductBanner from '../routes/ProductBanner/ProductBanner'
 //产品系列轮播管理
 
-import Pie from '../routes/agent/distribution'
+
 //代理返现
 import Cashback from '../routes/agent/cashback'
 import Cashbackmsg from '../routes/agent/cashbackmsg'
@@ -148,9 +148,7 @@ export const getRouterData = () => {
     "/news/content": {
       component: News,
     },
-    "/statistics/distribution": {
-      component: Pie,
-    },
+
     "/statistics/commodity": {
       component: commodityStatistics,
     },

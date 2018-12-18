@@ -9,12 +9,11 @@ function memberRedux(state = initstate, { type, payload }) {
 
     switch (type) {
         case 'findAllMemberSuccess':
-        console.log('redux',payload)
         return {
             ...state,
-            list: payload.data.data.list.list,
-            pageIndex: payload.data.data.list.pageIndex,
-            total: payload.data.data.list.total,
+            list: payload.data.data.info.members,
+            pageIndex: payload.data.data.info.pageIndex,
+            total: payload.data.data.info.total,
             loading:false
         }
         case 'member/loading':
@@ -22,8 +21,7 @@ function memberRedux(state = initstate, { type, payload }) {
                 ...state,
                 loading: true,
             }
-            case 'findCountByMemberLecelSuccess':
-            console.log('reduxCount',payload)
+        case 'findCountByMemberLecelSuccess':
             return {
                 ...state,
                 levelCount: payload.data.data.list,

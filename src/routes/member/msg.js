@@ -4,6 +4,7 @@ import styles from '../../common/common.less';
 import { Table, Button, Popconfirm, Modal, Form, Input } from 'antd';
 import { pageSize } from '../../utils/config'
 import PageHeader from 'ant-design-pro/lib/PageHeader';
+import ImgPreview from 'img-preview';
 const ButtonGroup = Button.Group;
 const FormItem = Form.Item;
 //会员信息管理
@@ -20,47 +21,16 @@ class msg extends Component {
   }
 
   componentDidMount() {
-    if (this.props.location.state) {
-      this.props.dispatch({
-        type: 'findAllMemberList',
-        payload: { level: this.props.location.state.record, pageSize: pageSize, pageIndex: this.props.memberRedux.pageIndex ? this.props.memberRedux.pageIndex : 1 },
-      });
-    } else {
-      this.props.dispatch({
-        type: 'findAllMemberList',
-        payload: { pageSize: pageSize, pageIndex: this.props.memberRedux.pageIndex ? this.props.memberRedux.pageIndex : 1 },
-      });
-    }
 
-  }
-
-
-
-
-  handleCancel = (e) => {
-    this.props.form.resetFields();
-    this.setState({
-      visible: false,
+    this.props.dispatch({
+      type: 'findAllMemberList',
+      payload: { pageSize: pageSize, pageIndex: this.props.memberRedux.pageIndex ? this.props.memberRedux.pageIndex : 1 },
     });
+
   }
 
-  handleOk = (e) => {
-    e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-
-
-        this.setState({
-          visible: false,
-        })
-      }
-
-
-    });
-  }
   // 提交检索表单
   onSubmit = (data) => {
-    console.log('检索：', data)
     this.setState({
       query: data,
     })
@@ -72,23 +42,21 @@ class msg extends Component {
 
   render() {
 
-    const { getFieldDecorator } = this.props.form;
-    const { taskTypeId, } = this.state.list;
-
-
-    const columns = [{
+    const columns = [
+    {
+      title: '微信头像',
+      dataIndex: 'head_portrait',
+      key: 'head_portrait',
+      render: (text, record) => {
+        return (
+          <ImgPreview src={record.head_portrait} />
+        )
+      }
+    },
+    {
       title: '微信昵称',
       dataIndex: 'nick_name',
       key: 'nick_name',
-    }, {
-      title: '姓名',
-      dataIndex: 'name',
-      key: 'name',
-    },
-    {
-      title: '会员等级',
-      dataIndex: 'level_info',
-      key: 'level_info',
     },
     {
       title: '手机号',
@@ -96,18 +64,32 @@ class msg extends Component {
       key: 'phone',
     },
     {
-      title: '推荐人姓名',
-      dataIndex: 'referee_name',
-      key: 'referee_name',
+      title: '余额',
+      dataIndex: 'balance',
+      key: 'balance',
+      render: (text, record) => {
+        return (
+          <div>
+            {parseFloat(record.balance)}
+          </div>
+        )
+      }
     },
     {
-      title: '地址信息',
-      dataIndex: 'address',
-      key: 'address',
+      title: '是否为推客',
+      dataIndex: 'promotion',
+      key: 'promotion',
+      render: (text, record) => {
+        return (
+          <div>
+            {record.promotion == 0 ? '否' : '是'}
+          </div>
+        )
+      }
     }, {
-      title: '更新时间',
-      dataIndex: 'updatedAt',
-      key: 'updatedAt',
+      title: '创建时间',
+      dataIndex: 'create_time',
+      key: 'create_time',
     },
     ];
 
@@ -123,17 +105,13 @@ class msg extends Component {
 
     };
 
-
-
-
     //页头
     const breadcrumbList = [{
       title: '首页',
       href: '/',
     }, {
       title: '会员管理',
-    }, {
-      title: '会员管理',
+      href: '/member/msg',
     }];
 
     // 定义分页对象
@@ -190,10 +168,6 @@ const SearchMsg = Form.create()(
         if (!err) {
           values.pageSize = pageSize;
           values.pageIndex = 1;
-          if (values.name == undefined) {
-            values.name = '';
-          }
-          values.name = values.name.trim();
           if (values.phone == undefined) {
             values.phone = '';
           }
@@ -203,33 +177,20 @@ const SearchMsg = Form.create()(
         }
       });
     }
-
     render() {
       const { getFieldDecorator } = this.props.form;
       return (
         <Form layout="inline" onSubmit={this.handleSubmit}>
           <FormItem>
-            {getFieldDecorator('name')(
-              <Input placeholder="请输入姓名" style={{ width: '150px' }} />
-
-            )}
-          </FormItem>
-          <FormItem>
             {getFieldDecorator('phone')(
-              <Input placeholder="请输入手机号码" style={{ width: '150px' }} />
+              <Input placeholder="请输入手机号" />
 
             )}
           </FormItem>
           <FormItem>
-            <Button
-              type="primary"
-              htmlType="submit"
-            >
-              查询
-                  </Button>
+            <Button type="primary" htmlType="submit">查询</Button>
           </FormItem>
         </Form>
-
       );
     }
 

@@ -3,17 +3,17 @@ import { findAllMember, findCountByMemberLecel} from '../services/member'
 import { message } from 'antd';
 import { pageSize } from '../utils/config'
 function* findAll({ payload }) {
-  console.log('传输',payload)
   const response = yield call(findAllMember, payload);
-   console.log('第一条',response)
   yield put({
     type: 'member/loading'
   });
-  if (response.data.ret == '200') {
+  if(response.data.data.code==1){
     yield put({
       type: 'findAllMemberSuccess',
       payload: {...response }
     })
+  }else{
+    message.error('获取会员列表失败');
   }
 }
 function* findCount({ payload }) {

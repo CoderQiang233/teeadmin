@@ -40,10 +40,12 @@ const menuData = [
     children: [{
       name: '总库存管理',
       path: 'totalInventory',
-    }, {
-      name: '代理库存管理',
-      path: 'agentInventory',
-    }]
+    }
+    // , {
+    //   name: '代理库存管理',
+    //   path: 'agentInventory',
+    // }
+  ]
   },
   {
     name: '返现管理',
@@ -63,10 +65,8 @@ const menuData = [
     name: '数据统计',
     icon: 'pie-chart',
     path: 'statistics',
-    children: [{
-      name: '代理分布',
-      path: 'distribution',
-    },
+    children: [
+
     {
       name: '商品销售统计',
       path: 'commodity',

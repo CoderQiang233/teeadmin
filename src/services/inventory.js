@@ -12,7 +12,7 @@ export async function findAllTInventoryItem(data) {
 //增加库存(总库存)
 export async function addTotal(data) {
   data.service = 'Inventory.EditTotalInventory';
-  data.XDEBUG_SESSION_START = 15855;
+  data.XDEBUG_SESSION_START = 10966;
   return request(apiAdmin,data);
 }
 

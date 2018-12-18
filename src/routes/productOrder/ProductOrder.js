@@ -101,64 +101,32 @@ class ProductOrder extends PureComponent {
         //表头
         const columns = [{
             title: '订单编号',
-            dataIndex: 'order_id',
-            key: 'order_id',
+            dataIndex: 'pay_id',
+            key: 'pay_id',
         }, {
-            title: '客户姓名',
-            dataIndex: 'name',
-            key: 'name',
-        }, {
-            title: '客户手机号',
-            dataIndex: 'phone',
-            key: 'phone',
-        }, {
-            title: '商品名称',
-            dataIndex: 'commodity_name',
-            key: 'commodity_name',
-        }, {
-            title: '商品价格',
-            dataIndex: 'commodity_price',
-            key: 'commodity_price',
-        }, {
-            title: '购买数',
-            dataIndex: 'commodity_num',
-            key: 'commodity_num',
+            title: '客户昵称',
+            dataIndex: 'nick_name',
+            key: 'nick_name',
+        },   {
+            title: '状态',
+            dataIndex: 'pay',
+            key: 'pay',
         },{
             title: '总价',
             dataIndex: 'total',
             key: 'total',
-            render(text, record){
+            render: (text, record) => {
                 return (
-                    <div>
-                        {record.commodity_price*record.commodity_num}
-                    </div>
+                  <div>
+                    {parseFloat(record.total)}
+                  </div>
                 )
-            }
-        }, {
-            title: '未发货数',
-            dataIndex: 'shipnum',
-            key: 'shipnum',
-            render(text, record){
-                return(
-                    <div>{record.commodity_num-record.shipnum}</div>
-                )
-            }
+              }
         }, {
             title: '下单时间',
             dataIndex: 'updatedAt',
             key: 'updatedAt',
         }, {
-            title: '发货状态',
-            dataIndex: 'ship_status',
-            key: 'ship_status',
-            render(text, record){
-                return (
-                    <div>
-                        {record.ship_status=='0'?'未发货':'已发货'}
-                    </div>
-                )
-            }
-        },{
             title: '操作',
             key: 'action',
             render: (text, record) => (
@@ -198,12 +166,7 @@ class ProductOrder extends PureComponent {
                             </FormItem>
                             <FormItem>
                                 {getFieldDecorator('name')(
-                                    <Input placeholder="请输入客户姓名" />
-                                )}
-                            </FormItem>
-                            <FormItem>
-                                {getFieldDecorator('phone')(
-                                    <Input placeholder="请输入客户手机号" />
+                                    <Input placeholder="请输入客户昵称" />
                                 )}
                             </FormItem>
                             <FormItem>
@@ -223,9 +186,9 @@ class ProductOrder extends PureComponent {
 
                             <FormItem>
                                 <Button type="primary" htmlType="submit">查询</Button>
-                                <Button type='primary' style={{ marginLeft: 10 }} onClick={this.exportExcel} >
+                                {/* <Button type='primary' style={{ marginLeft: 10 }} onClick={this.exportExcel} >
                                     导出文件
-                                </Button>
+                                </Button> */}
 
                             </FormItem>
 

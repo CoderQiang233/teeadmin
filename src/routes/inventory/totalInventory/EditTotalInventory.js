@@ -36,7 +36,7 @@ class EditTotalInventory extends Component {
                 this.setState({
                     loading:true,
                 })
-                values.product_id = ware.id;
+                values.product_id = ware.product_id;
                 values.user_name = sessionStorage.getItem("name");
                 values.userName = sessionStorage.getItem("userName");
                 console.log('Received values of form: ', values);

@@ -29,12 +29,12 @@ class TotalInventory extends Component {
 
 
 //跳转到支行的库存管理页面
-handleClick = (product_id) => {
-  history.push({
-    pathname:'/inventory/agentInventory/list',
-    state:{product_id:product_id}
-  })
-}
+// handleClick = (product_id) => {
+//   history.push({
+//     pathname:'/inventory/agentInventory/list',
+//     state:{product_id:product_id}
+//   })
+// }
 
   //增加总库存
   edit = (record) => {
@@ -99,14 +99,16 @@ handleClick = (product_id) => {
       title: '实际库存',
       dataIndex: 'num',
       key: 'num',
-    },  {
-      title: '代理库存',
-      dataIndex: 'agentInventory',
-      key: 'agentInventory',
-      render:(text, record)=>(
-        <a type="primary" onClick={this.handleClick.bind(null, record.id)}>{record.agentInventory}</a>
-      )
-    },{
+    },  
+    // {
+    //   title: '代理库存',
+    //   dataIndex: 'agentInventory',
+    //   key: 'agentInventory',
+    //   render:(text, record)=>(
+    //     <a type="primary" onClick={this.handleClick.bind(null, record.id)}>{record.agentInventory}</a>
+    //   )
+    // },
+    {
       title: '创建时间',
       dataIndex: 'create_time',
       key: 'create_time',
@@ -117,7 +119,7 @@ handleClick = (product_id) => {
       render: (text, record) => (
         <ButtonGroup style={{width:180}}>
             <Button type="primary" onClick={this.edit.bind(null, record)} >编辑</Button>
-            <Button type="danger" onClick={this.findAll.bind(null,record.id)} >库存明细</Button>
+            <Button type="danger" onClick={this.findAll.bind(null,record.product_id)} >库存明细</Button>
         </ButtonGroup>
       )
     }];

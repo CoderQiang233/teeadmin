@@ -3,8 +3,8 @@
 //    let api='http://192.168.10.102';
 // let front='http://xcxadmin.zgftlm.com';
 //  let api='http://192.168.10.105';
- let front='http://localhost:3000';
-    let api='http://localhost';
+ let front='http://192.168.10.105:3000';
+    let api='http://192.168.10.105';
 
 module.exports = {
     api: api+'/public/meeting/',
