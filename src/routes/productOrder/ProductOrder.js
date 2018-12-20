@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Table, Row, Button, Radio, Popconfirm, Icon, Col, RangePicker, Form, Input, Upload, InputNumber, Select, message, DatePicker } from 'antd';
 import PageHeader from 'ant-design-pro/lib/PageHeader';
 import { pageSize, apiAdmin } from '../../utils/config';
-import { getDate } from '../../utils/common';
+import { getDate,ORDER_STATUS_0,ORDER_STATUS_1,ORDER_STATUS_2,ORDER_STATUS_3 } from '../../utils/common';
 import { history } from '../../store';
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -26,14 +26,6 @@ class ProductOrder extends PureComponent {
 
     }
 
-    //删除
-    // delete = (giftPresentId, values) => {
-    //     this.props.dispatch({
-    //         type: 'deleteproductOrder',
-    //         payload: { giftPresentId: giftPresentId },
-    //     });
-    // }
-
     //检索
     handleSubmit = (e) => {
         e.preventDefault();
@@ -41,11 +33,11 @@ class ProductOrder extends PureComponent {
             if (!err) {
                 values.pageSize = pageSize;
                 values.pageIndex = 1;
-                if (values.order_id == undefined) {
-                    values.order_id = '';
+                if (values.pay_id == undefined) {
+                    values.pay_id = '';
                 }
-                if (values.name == undefined) {
-                    values.name = '';
+                if (values.nick_name == undefined) {
+                    values.nick_name = '';
                 }
                 if (values.phone == undefined) {
                     values.phone = '';
@@ -111,6 +103,15 @@ class ProductOrder extends PureComponent {
             title: '状态',
             dataIndex: 'pay',
             key: 'pay',
+            render: (text, record) => {
+                return (
+                  <div>
+                    {record.pay==ORDER_STATUS_1&&'已支付'}
+                    {record.pay==ORDER_STATUS_2&&'待收货'}
+                    {record.pay==ORDER_STATUS_3&&'已完成'}
+                  </div>
+                )
+            }
         },{
             title: '总价',
             dataIndex: 'total',
@@ -130,7 +131,7 @@ class ProductOrder extends PureComponent {
             title: '操作',
             key: 'action',
             render: (text, record) => (
-                <Button type="primary" onClick={this.operation.bind(null, record.id)}>操作</Button>
+                <Button type="primary" onClick={this.operation.bind(null, record.order_id)}>操作</Button>
             ),
         }];
         const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
@@ -160,12 +161,12 @@ class ProductOrder extends PureComponent {
                     <div className={styles.search}>
                         <Form layout="inline" onSubmit={this.handleSubmit}>
                             <FormItem>
-                                {getFieldDecorator('order_id')(
+                                {getFieldDecorator('pay_id')(
                                     <Input placeholder="请输入订单编号" />
                                 )}
                             </FormItem>
                             <FormItem>
-                                {getFieldDecorator('name')(
+                                {getFieldDecorator('nick_name')(
                                     <Input placeholder="请输入客户昵称" />
                                 )}
                             </FormItem>
@@ -175,11 +176,12 @@ class ProductOrder extends PureComponent {
                                 )}
                             </FormItem>
                             <FormItem>
-                                {getFieldDecorator('ship_status')(
-                                    <Select style={{width:100}} placeholder='请选择'>
+                                {getFieldDecorator('pay')(
+                                    <Select style={{width:150}} placeholder='请选择'>
                                         <Option value=''>全部</Option>
-                                        <Option value='0'>未发货</Option>
-                                        <Option value='1'>已发货</Option>
+                                        <Option value={ORDER_STATUS_1}>已支付</Option>
+                                        <Option value={ORDER_STATUS_2}>待收货</Option>
+                                        <Option value={ORDER_STATUS_3}>已完成</Option>
                                      </Select>
                                 )}
                             </FormItem>

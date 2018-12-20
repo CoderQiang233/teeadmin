@@ -10,6 +10,7 @@ export async function getUserList(param) {
 
   export async function addUser(param) {
     param.service='UserManager.AddUser';
+    console.log(param);
     return request(apiAdmin,param);
   }
 

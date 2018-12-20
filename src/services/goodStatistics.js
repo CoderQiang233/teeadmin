@@ -5,5 +5,6 @@ const { apiAdmin } = config;
 
 export async function findAllGoodStatisticsList(param) {
     param.service='GoodStatistics.Getlist';
+    param.XDEBUG_SESSION_START = 17867;
     return request(apiAdmin,param);
   }

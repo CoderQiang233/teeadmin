@@ -25,10 +25,11 @@ const menuData = [
         name: '商品订单管理',
         path: 'productOrder'
       },
-      {
-        name: '防伪管理',
-        path: 'securitycode',
-      },]
+      // {
+      //   name: '防伪管理',
+      //   path: 'securitycode',
+      // },
+    ]
     },
  
 
@@ -71,10 +72,10 @@ const menuData = [
       name: '商品销售统计',
       path: 'commodity',
     },
-    {
-      name: '订单统计',
-      path: 'order',
-    },
+    // {
+    //   name: '订单统计',
+    //   path: 'order',
+    // },
     ]
   },
     {

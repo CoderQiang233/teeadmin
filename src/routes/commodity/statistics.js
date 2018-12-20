@@ -33,9 +33,6 @@ class statistics extends Component {
 
     }
 
-
-
-
     handleCancel = (e) => {
         this.props.form.resetFields();
         this.setState({
@@ -59,7 +56,6 @@ class statistics extends Component {
     }
     // 提交检索表单
     onSubmit = (data) => {
-        console.log('检索：', data)
         this.setState({
             query: data,
         })
@@ -71,28 +67,25 @@ class statistics extends Component {
 
     render() {
 
-        const { getFieldDecorator } = this.props.form;
-        const { taskTypeId, } = this.state.list;
-
-
         const columns = [{
             title: '商品名称',
-            dataIndex: 'commodity_name',
-            key: 'commodity_name',
-        }, {
-            title: '订单数量',
-            dataIndex: 'order_num',
-            key: 'order_num',
-        },
+            dataIndex: 'name',
+            key: 'name',
+        }, 
         {
             title: '商品数量',
-            dataIndex: 'commodity_num',
-            key: 'commodity_num',
+            dataIndex: 'product_num',
+            key: 'product_num',
         },
         {
             title: '金额总计(元)',
             dataIndex: 'orders_price',
             key: 'orders_price',
+            render:(text,record)=>{
+                return(
+                    <div>{parseFloat(record.orders_price)}</div>
+                )
+            }
         },
         ];
 
@@ -156,10 +149,10 @@ const SearchMsg = Form.create()(
             e.preventDefault();
             this.props.form.validateFields((err, values) => {
                 if (!err) {
-                    if (values.commodity_name == undefined) {
-                        values.commodity_name = '';
+                    if (values.name == undefined) {
+                        values.name = '';
                     }
-                    values.commodity_name = values.commodity_name.trim();
+                    values.name = values.name.trim();
 
                     if (values.datestart == undefined) {
                         values.datestart = '';
@@ -178,21 +171,7 @@ const SearchMsg = Form.create()(
                 }
             });
         }
-        // disabledStartDate = (startValue) => {
-        //     const endValue = this.state.endValue;
-        //     if (!startValue || !endValue) {
-        //         return startValue && startValue.valueOf() < Date.now();
-        //     }
-        //     return startValue.valueOf() > endValue.valueOf() || startValue.valueOf() < Date.now();
-        // }
-    
-        // disabledEndDate = (endValue) => {
-        //     const startValue = this.state.startValue;
-        //     if (!endValue || !startValue) {
-        //         return endValue && endValue.valueOf() < Date.now();
-        //     }
-        //     return endValue.valueOf() <= startValue.valueOf();
-        // }
+
         handleStartOpenChange = (open) => {
             if (!open) {
                 this.setState({ endOpen: true });
@@ -208,7 +187,7 @@ const SearchMsg = Form.create()(
             return (
                 <Form layout="inline" onSubmit={this.handleSubmit}>
                     <FormItem>
-                        {getFieldDecorator('commodity_name')(
+                        {getFieldDecorator('name')(
                             <Input placeholder="请输入商品名称" style={{ width: '150px' }} />
 
                         )}
@@ -245,12 +224,7 @@ const SearchMsg = Form.create()(
                             )}
                     </FormItem>
                     <FormItem>
-                        <Button
-                            type="primary"
-                            htmlType="submit"
-                        >
-                            查询
-                  </Button>
+                        <Button type="primary" htmlType="submit">查询</Button>
                     </FormItem>
                 </Form>
 

@@ -213,3 +213,65 @@
     }
 
 }
+
+
+.orderProduct{
+    width: 100%;
+    table{
+        width: 100%;
+        border: 1px solid #ddd;
+        background-color: transparent;
+        border-collapse: collapse;
+        border-spacing: 0;
+        display: table;
+        thead{
+            border: 1px solid #ddd;
+            th{
+                text-align: start;
+                font-size: 14px;
+                padding:10px;
+                border: 1px solid #ddd;
+            }
+            th:nth-last-child(1){
+                 text-align: end;   
+            }
+            th:nth-last-child(2){
+                text-align: end;   
+           }
+            
+            
+        }
+        tbody{
+            border: 1px solid #ddd;
+            tr{
+                td{
+                    text-align: start;
+                    padding:10px;
+                    font-size: 14px;
+                    border: 1px solid #ddd;
+                    button{
+                        font-size: 14px;
+                    }
+                }
+                td:nth-last-child(1){
+                    text-align: end;   
+               }
+               td:nth-last-child(2){
+                text-align: end;   
+           }
+                
+            }
+        }
+        tfoot{
+            tr{
+                border: 1px solid #ddd;
+                
+                td{
+                    padding:10px;
+                    text-align: end;
+                    border: 1px solid #ddd;
+                }  
+            }
+        }
+    }
+}

@@ -30,7 +30,6 @@ class Index extends PureComponent {
     }
     //操作
     operation = (orderId, values) => {
-
         history.push({
             pathname: '/product/productOrder/express',
             state: { orderId: orderId }
@@ -65,13 +64,13 @@ class Index extends PureComponent {
 
         //表头
         const columns = [{
-            title: '姓名',
-            dataIndex: 'name',
-            key: 'name',
+            title: '昵称',
+            dataIndex: 'nick_name',
+            key: 'nick_name',
         }, {
-            title: '商品名',
-            dataIndex: 'commodity_name',
-            key: 'commodity_name',
+            title: '手机号',
+            dataIndex: 'phone',
+            key: 'phone',
         }, {
             title: '下单时间',
             dataIndex: 'updatedAt',
@@ -83,7 +82,7 @@ class Index extends PureComponent {
             render(text, record) {
                 return (
                     <div>
-                        {record.commodity_price * record.commodity_num}
+                        {parseFloat(record.total)}
                     </div>
                 )
             }
@@ -92,7 +91,7 @@ class Index extends PureComponent {
             key: 'action',
             render: (text, record) => (
                 
-                <a><Icon type='setting' onClick={this.operation.bind(null, record.id)}></Icon></a>
+                <a><Icon type='setting' onClick={this.operation.bind(null, record.order_id)}></Icon></a>
             ),
         }];
 

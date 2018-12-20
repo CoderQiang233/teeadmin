@@ -3,9 +3,7 @@ import { findAllGoodStatisticsList} from '../services/goodStatistics'
 import { message } from 'antd';
 import { pageSize } from '../utils/config'
 function* findAllTongjiList({ payload }) {
-  console.log('传输',payload)
   const response = yield call(findAllGoodStatisticsList, payload);
-   console.log('第一条',response)
   yield put({
     type: 'goodStatistics/loading'
   });
