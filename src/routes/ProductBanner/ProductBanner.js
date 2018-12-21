@@ -29,7 +29,6 @@ class ProductBanner extends PureComponent {
         }
     };
     componentDidMount() {
-        console.log(this.props)
         this.props.dispatch({
             type: 'findAllProductBannerList',
             payload:{}
@@ -56,14 +55,10 @@ class ProductBanner extends PureComponent {
             imageUrl:record.path
         })
 
-        console.log(record)
-        console.log(this.state.value)
-
     }
     //删除
     delete = (data, values) => {
-        console.log(data,values)
-        console.log(data.id,imgPath+data.path)
+
         this.props.dispatch({
             type: 'deleteProductBanner',
             payload: { id: data.id,path:data.path},
@@ -102,7 +97,6 @@ class ProductBanner extends PureComponent {
         }
 
         if (info.file.status === 'done') {
-            console.log(info);
             this.setState({
                 imageUrl: info.file.response.data.file,
                 loading: false,
@@ -120,7 +114,6 @@ class ProductBanner extends PureComponent {
         this.props.form.validateFieldsAndScroll((err, values) => {
             let urlpath={}
             if (!err) {
-                console.log(values);
                 if (this.state.type == 'insert') {
                     urlpath.path=values.imgurl.file.response.data.file;
                     urlpath.is_use=values.value;
@@ -131,7 +124,6 @@ class ProductBanner extends PureComponent {
                       urlpath.id = this.state.slideShow.id;
                       urlpath.is_use=values.value;
                   }
-                  console.log(urlpath);
 
                 this.props.dispatch({
                     type: this.state.type + 'ProductBanner',
@@ -181,7 +173,7 @@ class ProductBanner extends PureComponent {
             href: '/',
         }, {
             title: '轮播图管理',
-            href: '/ProductBanner/ProductBanner',
+            href: '/system/ProductBanner',
         }];
         //表头
         const columns = [{
@@ -193,15 +185,7 @@ class ProductBanner extends PureComponent {
                 // <img src={path + record.path} style={{ width: 60, height: 40 }} />
             )
         },
-            {
-                title: '位置',
-                dataIndex: 'is_use',
-                key: 'is_use',
-                render: (text, record) => (
-                    <div>{record.is_use == 1 ? '首页轮播' : '产品轮播'}</div>
-                )
 
-            },
             {
             title: '上传时间',
             dataIndex: 'create_time',
@@ -292,31 +276,6 @@ class ProductBanner extends PureComponent {
                             </FormItem>
                             }
 
-
-                            {type == 'insert' &&
-                            <FormItem {...formItemLayout}
-                                      label="展示位置">
-                                {getFieldDecorator('value', {
-                                    initialValue: this.state.value,
-                                    rules: [{ required: true, message: '请选择展示位置' }]
-                                })(
-                                <RadioGroup onChange={this.onChange} >
-                                    <Radio value={1}>首页轮播</Radio>
-                                    <Radio value={2}>产品轮播</Radio>
-                                </RadioGroup>
-                                )}
-                            </FormItem>}
-
-
-                            {type == 'update' &&
-                            <FormItem {...formItemLayout}
-                                      label="展示位置">
-                                    <RadioGroup onChange={this.onChange} defaultValue={this.state.slideShow.is_use} >
-                                        <Radio value={'1'}>首页轮播</Radio>
-                                        <Radio value={'2'}>产品轮播</Radio>
-                                    </RadioGroup>
-                            </FormItem>
-                            }
 
                         </Form>
 

@@ -104,7 +104,7 @@ class BasicLayout extends PureComponent {
 
   getPageTitle() {
 
-    return "志梨国际后台管理系统";
+    return "福玉茶商城后台管理系统";
 
   }
 

@@ -203,10 +203,7 @@ class GoodsType extends Component {
       title: '首页',
       href: '/',
     }, {
-      title: '商品管理',
-      href: '/product/productList',
-    }, {
-      title: '商品类别',
+      title: '商品类别管理',
       href: '/product/productType',
     }];
 

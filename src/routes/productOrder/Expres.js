@@ -102,7 +102,7 @@ class Expres extends Component {
     }
 
     render() {
-        const { receiver_name, receiver_phone, shipping_address, total,products } = this.props.productOrder.order
+        const { receiver_name, receiver_phone, shipping_address, total,products,balance_pay,cash_pay } = this.props.productOrder.order
 
         const { getFieldDecorator } = this.props.form;
 
@@ -225,6 +225,14 @@ class Expres extends Component {
                                         <tr>
                                             <td colSpan="3">商品总额</td>
                                             <td>￥{total}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colSpan="3">余额支付金额</td>
+                                            <td>￥{balance_pay}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colSpan="3">现金支付金额</td>
+                                            <td>￥{cash_pay}</td>
                                         </tr>
                                         <tr>
                                             <td colSpan="3">订单总额</td>

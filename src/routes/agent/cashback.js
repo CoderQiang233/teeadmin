@@ -30,9 +30,6 @@ class cashback extends Component {
 
   }
 
-
-
-
   handleCancel = (e) => {
     this.props.form.resetFields();
     this.setState({
@@ -68,7 +65,7 @@ class cashback extends Component {
   //修改
   edit = (record, values) => {
     //跳页前将当前页设为默认1
-    this.props.cashbackRedux.pageIndex=1;
+    this.props.cashbackRedux.pageIndex = 1;
     history.push({
       pathname: '/agent/cashbackmsg',
       state: { record: record }
@@ -77,7 +74,7 @@ class cashback extends Component {
   //月返现
   editmonth = (record, values) => {
     //跳页前将当前页设为默认1
-    this.props.cashbackRedux.pageIndex=1;
+    this.props.cashbackRedux.pageIndex = 1;
     history.push({
       pathname: '/agent/cashbackmonth',
       state: { record: record }
@@ -87,69 +84,66 @@ class cashback extends Component {
 
     const { getFieldDecorator } = this.props.form;
 
-
-
     const columns = [{
       title: '微信昵称',
       dataIndex: 'nick_name',
       key: 'nick_name',
-    }, {
-      title: '姓名',
-      dataIndex: 'name',
-      key: 'name',
     },
-    {
-      title: '会员等级',
-      dataIndex: 'level_info',
-      key: 'level_info',
-    },
+
     {
       title: '手机号',
       dataIndex: 'phone',
       key: 'phone',
     },
     {
-      title: '授权编号',
-      dataIndex: 'authorization_number',
-      key: 'authorization_number',
+      title: '总金额(元)',
+      dataIndex: 'total_balance',
+      key: 'total_balance',
+      render: (text, record) => {
+        return (
+          <div>
+            {parseFloat(record.total_balance)}
+          </div>
+        )
+      }
     },
     {
-      title: '总返现金额(元)',
-      dataIndex: 'zongcash',
-      key: 'zongcash',
-      render: (text, record) => (
-       
-       <div>
-         {record.zongcash&&
-          <ButtonGroup >
-            <Button  onClick={this.edit.bind(null, record)} style={{ width: '150px',border:'none',background:'none',color:'blue'}} className={styles.btnprice}>{record.zongcash}</Button>
-          </ButtonGroup>
-         }
-         {!record.zongcash&&
-          <ButtonGroup >
-            <Button  onClick={this.edit.bind(null, record)} style={{ width: '150px',border:'none',background:'none',color:'blue'}} className={styles.btnprice}>0</Button>
-          </ButtonGroup>
-         }
-        </div>
-      
-      
-         
- 
-    )
+      title: '结算金额(元)',
+      dataIndex: 'yes_balance',
+      key: 'yes_balance',
+      render: (text, record) => {
+        return (
+          <div>
+            {parseFloat(record.yes_balance)}
+          </div>
+        )
+      }
     },
     {
-      title: '操作',
-      dataIndex: 'operation',
-      key: 'operation',
-      render: (text, record) => (
-        <div>
-          <ButtonGroup >
-            {/* <Button type="primary" onClick={this.edit.bind(null, record)}>返现明细</Button> */}
-            <Button type="primary" onClick={this.editmonth.bind(null, record)}>月返现</Button>
-          </ButtonGroup>
-        </div>
-      )
-    }
+      title: '可用金额(元)',
+      dataIndex: 'balance',
+      key: 'balance',
+      render: (text, record) => {
+        return (
+          <div>
+            {parseFloat(record.balance)}
+          </div>
+        )
+      }
+    },
+    // {
+    //   title: '操作',
+    //   dataIndex: 'operation',
+    //   key: 'operation',
+    //   render: (text, record) => (
+    //     <div>
+    //       <ButtonGroup >
+    //         {/* <Button type="primary" onClick={this.edit.bind(null, record)}>返现明细</Button> */}
+    //         <Button type="primary" onClick={this.editmonth.bind(null, record)}>月返现</Button>
+    //       </ButtonGroup>
+    //     </div>
+    //   )
+    // }
     ];
 
     const formItemLayout = {
@@ -172,9 +166,7 @@ class cashback extends Component {
       title: '首页',
       href: '/',
     }, {
-      title: '代理管理',
-    }, {
-      title: '代理返现',
+      title: '推广返现',
     }];
 
     // 定义分页对象
@@ -195,8 +187,6 @@ class cashback extends Component {
       },
     };
 
-
-
     return (
       <div className={styles.content}>
         <PageHeader breadcrumbList={breadcrumbList} className={styles.page} />
@@ -205,7 +195,7 @@ class cashback extends Component {
             <SearchMsg onSubmit={this.onSubmit} />
           </div>
           <div>
-            <Table columns={columns} dataSource={this.props.cashbackRedux.list} loading={this.props.cashbackRedux.loading} pagination={pagination} rowKey={record => record.id}/>
+            <Table columns={columns} dataSource={this.props.cashbackRedux.list} loading={this.props.cashbackRedux.loading} pagination={pagination} />
           </div>
         </div>
       </div>
@@ -239,10 +229,6 @@ const SearchMsg = Form.create()(
             values.phone = '';
           }
           values.phone = values.phone.trim();
-          if (values.authorization_number == undefined) {
-            values.authorization_number = '';
-          }
-          values.authorization_number = values.authorization_number.trim();
           console.log('Received values of form: ', values);
           this.props.onSubmit(values);
         }
@@ -254,20 +240,14 @@ const SearchMsg = Form.create()(
       return (
         <Form layout="inline" onSubmit={this.handleSubmit}>
           <FormItem>
-            {getFieldDecorator('name')(
-              <Input placeholder="请输入姓名" style={{ width: '150px' }} />
+            {getFieldDecorator('nick_name')(
+              <Input placeholder="请输入微信昵称" style={{ width: '150px' }} />
 
             )}
           </FormItem>
           <FormItem>
             {getFieldDecorator('phone')(
               <Input placeholder="请输入手机号码" style={{ width: '150px' }} />
-
-            )}
-          </FormItem>
-          <FormItem>
-            {getFieldDecorator('authorization_number')(
-              <Input placeholder="请输入代理授权编号" style={{ width: '150px' }} />
 
             )}
           </FormItem>

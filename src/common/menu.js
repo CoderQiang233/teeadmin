@@ -53,7 +53,7 @@ const menuData = [
     icon: 'pay-circle',
     path: 'agent',
     children: [{
-      name: '代理返现',
+      name: '推广返现',
       path: 'cashback',
     },
     // {
@@ -78,20 +78,20 @@ const menuData = [
     // },
     ]
   },
-    {
-        name: '新闻中心',
-        icon: 'layout',
-        path: 'news/content',
-    },
+    // {
+    //     name: '新闻中心',
+    //     icon: 'layout',
+    //     path: 'news/content',
+    // },
   {
     name: '系统设置',
     icon: 'setting',
     path: 'system',
     children: [
-      {
-        name: '公司简介',
-        path: 'profile',
-      },
+      // {
+      //   name: '公司简介',
+      //   path: 'profile',
+      // },
       {
         name: '用户管理',
         path: 'index',

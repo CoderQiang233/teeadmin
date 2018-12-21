@@ -109,8 +109,6 @@ class statistics extends Component {
             title: '首页',
             href: '/',
         }, {
-            title: '商品销售管理',
-        }, {
             title: '商品销售统计',
         }];
 

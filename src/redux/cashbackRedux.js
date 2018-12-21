@@ -11,12 +11,11 @@ function cashbackRedux(state = initstate, { type, payload }) {
 
     switch (type) {
         case 'findAllCashbackListSuccess':
-            console.log('redux', payload)
             return {
                 ...state,
-                list: payload.data.data.list.list,
-                pageIndex: payload.data.data.list.pageIndex,
-                total: payload.data.data.list.total,
+                list: payload.data.data.info.promoters,
+                pageIndex: payload.data.data.info.pageIndex,
+                total: payload.data.data.info.total,
                 loading: false
             }
         case 'cashback/loading':
@@ -25,7 +24,6 @@ function cashbackRedux(state = initstate, { type, payload }) {
                 loading: true,
             }
         case 'findAllCashbackListMsgSuccess':
-            console.log('redux', payload)
             return {
                 ...state,
                 cashlist: payload.data.data.list.list,
@@ -39,7 +37,6 @@ function cashbackRedux(state = initstate, { type, payload }) {
                 loading: true,
             }
         case 'findAllMonthRecordSuccess':
-            console.log('redux', payload)
             return {
                 ...state,
                 monthlist: payload.data.data.list.list,

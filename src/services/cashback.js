@@ -4,14 +4,14 @@ import config from '../utils/config';
 const { apiAdmin } = config;
 
 export async function findAllCashbackList(param) {
-  param.service = 'AgentCashback.GetMemberList';
+  param.service = 'AgentCashback.GetPromoterList';
+  param.XDEBUG_SESSION_START=16436;
   return request(apiAdmin, param);
 }
 
 export async function findAllCashbackListMsg(param) {
   param.service = 'AgentCashback.GetAgentCashbackList';
   param.XDEBUG_SESSION_START=16436;
-  console.log(13,param)
   return request(apiAdmin, param);
 }
 export async function findAllMonthRecord(param) {

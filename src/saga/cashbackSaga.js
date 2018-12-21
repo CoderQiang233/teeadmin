@@ -3,11 +3,11 @@ import { findAllCashbackList,findAllCashbackListMsg,findAllMonthRecord,updateCas
 import { message } from 'antd';
 import { pageSize } from '../utils/config'
 function* findAll({ payload }) {
-  const response = yield call(findAllCashbackList, payload);
   yield put({
     type: 'cashback/loading'
   });
-  if (response.data.ret == '200') {
+  const response = yield call(findAllCashbackList, payload);
+  if (response.data.data.code==1) {
     yield put({
       type: 'findAllCashbackListSuccess',
       payload: {...response }
@@ -15,12 +15,10 @@ function* findAll({ payload }) {
   }
 }
 function* findAllList({ payload }) {
-  console.log(11,payload)
-  const response = yield call(findAllCashbackListMsg, payload);
-  console.log(12,response)
   yield put({
     type: 'cashbackMsg/loading'
   });
+  const response = yield call(findAllCashbackListMsg, payload);
   if (response.data.ret == '200') {
     yield put({
       type: 'findAllCashbackListMsgSuccess',
@@ -69,7 +67,7 @@ function* update({ payload }) {
     }
   }
 function* cashbackSaga() {
-  //获取会员返现信息列表(代理商)
+  //获取推客可用返现信息
   yield takeLatest('findAllCashbackList', findAll)
   //获取返现明细
   yield takeLatest('findAllCashbackListMsg',findAllList)
