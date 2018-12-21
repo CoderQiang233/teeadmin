@@ -119,6 +119,13 @@ class Goods extends Component {
       title: '佣金比率',
       dataIndex: 'brokerage',
       key: 'brokerage',
+      render:(text, record)=>{
+        return (
+          <div>
+            {record.brokerage}%
+          </div>
+        )
+      }
     },
     // {
     //   title: '商品品牌',
