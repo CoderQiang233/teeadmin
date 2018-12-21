@@ -26,7 +26,7 @@ const links = [{
   href: '',
 }];
 
-const copyright = <div>Copyright <Icon type="copyright" /> 2018 蚂蚁金服体验技术部出品</div>;
+const copyright = <div>Copyright <Icon type="copyright" /> 2018 耐特斯达集团</div>;
 
 const { AuthorizedRoute } = Authorized;
 
@@ -51,7 +51,7 @@ class UserLayout extends React.PureComponent {
             <div className={styles.top}>
               <div className={styles.header}>
 
-                <span className={styles.title}>志梨国际后台管理系统</span>
+                <span className={styles.title}>福玉茶商城后台管理系统</span>
 
               </div>
             </div>
